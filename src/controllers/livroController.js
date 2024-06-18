@@ -6,7 +6,8 @@ class LivroController {
     //Método GET para listar livros da livraria:
     static async listarLivros(req, res) {
         try {
-            const listaLivros = await livro.find({});
+            //const listaLivros = await livro.find({});
+            const listaLivros = await livro.find({}).populate("autor").exec();
             res.status(200).json(listaLivros);
         } catch (erro) {
             res.status(500).json({ massage: `${erro.massage} - Falha na requisição.` });
@@ -17,7 +18,8 @@ class LivroController {
     static async listarLivroPorId(req, res) {
         try {
             const id = req.params.id;
-            const livroEncontrado = await livro.findById(id);
+            //const livroEncontrado = await livro.findById(id);
+            const livroEncontrado = await livro.findById(id).populate("autor").exec();
             res.status(200).json(livroEncontrado);
         } catch (erro) {
             res.status(500).json({ massage: `${erro.massage} - Falha na requisição do livro.` });
@@ -26,11 +28,12 @@ class LivroController {
 
     //Método POST para criar livro na livraria:
     static async cadastrarLivro(req, res) {
-        const novoLivro = req.body;
+        //const novoLivro = req.body;
         try {
-            const autorEncontrado = await autor.findById(novoLivro.autor);
-            const livroCompleto = { ...novoLivro, autor: { ...autorEncontrado._doc } };
-            const livroCriado = await livro.create(livroCompleto);
+            //const autorEncontrado = await autor.findById(novoLivro.autor);
+            //const livroCompleto = { ...novoLivro, autor: { ...autorEncontrado._doc } };
+            //const livroCriado = await livro.create(livroCompleto);
+            const livroCriado = await livro.create(req.body);
             res.status(201).json({ message: "Criado com sucesso!", livro: livroCriado });
         } catch (erro) {
             res.status(500).json({ massage: `${erro.massage} - Falha ao cadastrar livro.` });
@@ -63,7 +66,8 @@ class LivroController {
     static async listarLivrosPorEditora(req, res) {
         const editora = req.query.editora;
         try {
-            const livrosPorEditora = await livro.find({ editora: editora });
+            //const livrosPorEditora = await livro.find({ editora: editora });
+            const livrosPorEditora = await livro.find({ editora: editora }).populate("autor").exec();
             res.status(200).json(livrosPorEditora);
         } catch (erro) {
             res.status(500).json({ massage: `${erro.massage} - Falha na busca.` });
