@@ -1,5 +1,5 @@
 {
-  "name": "estudo-api-rest",
+  "name": "alura-node",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,11 +11,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.5.0",
+    "eslint": "^9.5.0",
+    "globals": "^15.6.0",
+    "nodemon": "^2.0.15"
+  },
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "express": "^4.18.1",
-    "mongodb": "^6.7.0",
-    "mongoose": "^7.3.4",
-    "nodemon": "^3.0.1"
+    "dotenv": "^16.0.3",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.6"
   }
 }
