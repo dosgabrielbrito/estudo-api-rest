@@ -1,5 +1,5 @@
-import NaoEncontrado from "../erros/naoEncontrado.js";
-import { autores, livros } from "../models/index.js";
+import NaoEncontrado from '../erros/naoEncontrado.js';
+import { autores, livros } from '../models/index.js';
 
 class LivroController {
   static listarLivros = async (req, res, next) => {
@@ -22,7 +22,7 @@ class LivroController {
       if (livroResultados !== null) {
         res.status(200).send(livroResultados);
       } else {
-        next(new NaoEncontrado("Id do livro não localizado."));
+        next(new NaoEncontrado('Id do livro não localizado.'));
       }
     } catch (erro) {
       next(erro);
@@ -48,10 +48,10 @@ class LivroController {
       if (idEncontrado !== null) {
         await livros.findByIdAndUpdate(id, { $set: req.body });
         res.status(200).send({
-          message: "Livro atualizado com sucesso.",
+          message: 'Livro atualizado com sucesso.',
         });
       } else {
-        next(new NaoEncontrado("Id do livro não localizado."));
+        next(new NaoEncontrado('Id do livro não localizado.'));
       }
     } catch (erro) {
       next(erro);
@@ -65,9 +65,9 @@ class LivroController {
 
       if (idEncontrado !== null) {
         await livros.findByIdAndDelete(id);
-        res.status(200).send({ message: "Livro removido com sucesso" });
+        res.status(200).send({ message: 'Livro removido com sucesso' });
       } else {
-        next(new NaoEncontrado("Id do livro não localizado."));
+        next(new NaoEncontrado('Id do livro não localizado.'));
       }
     } catch (erro) {
       next(erro);
@@ -76,7 +76,7 @@ class LivroController {
 
   static listarLivroPorFiltro = async (req, res, next) => {
     try {
-      const busca = await processBusca(req.query);
+      const busca = await processarBusca(req.query);
 
       if (busca !== null) {
         const livrosResultado = livros.find(busca);
@@ -94,13 +94,13 @@ class LivroController {
 }
 
 //Função para processamento de buscas na url:
-async function processBusca(paramentros) {
+async function processarBusca(paramentros) {
   const { editora, titulo, minPaginas, maxPaginas, nomeAutor } = paramentros;
 
   let busca = {};
 
   if (editora) busca.editora = editora;
-  if (titulo) busca.titulo = { $regex: titulo, $options: "i" };
+  if (titulo) busca.titulo = { $regex: titulo, $options: 'i' };
 
   if (minPaginas) busca.paginas = { ...busca.paginas, $gte: minPaginas };
   if (maxPaginas) busca.paginas = { ...busca.paginas, $lte: maxPaginas };
